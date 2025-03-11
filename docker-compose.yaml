@@ -237,74 +237,7 @@ services:
       interval: 5s
       timeout: 10s
       retries: 5
-  multi:
-    image: ${IMAGE_PREFIX}/${GHCR_USERNAME}/quickstart-tutorials/jenkinsci-tutorials:node_agent_${BRANCH_SUFFIX}
-    environment:
-      - GITPOD_WORKSPACE_URL=${GITPOD_WORKSPACE_URL}
-    container_name: desktop-jenkins_agent-1-multi
-    profiles:
-      - multi
-    depends_on:
-      sidekick_service:
-        condition: service_completed_successfully # Depends on the successful completion of the sidekick_service
-      multi_jenkins_controller:
-        condition: service_started
-    ports:
-      - "3000:3000"
-      - "5000:5000"
-    healthcheck:
-      test: ["CMD-SHELL", "[ -f /home/jenkins/.ssh/authorized_keys ] || exit 1"]
-      # Checks if the authorized_keys file exists in the /home/jenkins/.ssh path
-      interval: 5s
-      timeout: 10s
-      retries: 5
-    volumes:
-      - agent-ssh-dir:/home/jenkins/.ssh:ro # Mounts the agent-ssh-dir volume to the /home/jenkins/.ssh path inside the container as read-only
-  golang:
-    image: ${IMAGE_PREFIX}/${GHCR_USERNAME}/quickstart-tutorials/jenkinsci-tutorials:golang_${BRANCH_SUFFIX}
-    environment:
-      - GITPOD_WORKSPACE_URL=${GITPOD_WORKSPACE_URL}
-    container_name: desktop-jenkins_agent-1-golang
-    profiles:
-      - golang
-    depends_on:
-      sidekick_service:
-        condition: service_completed_successfully # Depends on the successful completion of the sidekick_service
-      jenkins_controller:
-        condition: service_started
-    ports:
-      - "3000:3000"
-    healthcheck:
-      test: ["CMD-SHELL", "[ -f /home/jenkins/.ssh/authorized_keys ] || exit 1"]
-      # Checks if the authorized_keys file exists in the /home/jenkins/.ssh path
-      interval: 5s
-      timeout: 10s
-      retries: 5
-    volumes:
-      - agent-ssh-dir:/home/jenkins/.ssh:ro # Mounts the agent-ssh-dir volume to the /home/jenkins/.ssh path inside the container as read-only
-  cpp:
-    image: ${IMAGE_PREFIX}/${GHCR_USERNAME}/quickstart-tutorials/jenkinsci-tutorials:cpp_${BRANCH_SUFFIX}
-    environment:
-      - GITPOD_WORKSPACE_URL=${GITPOD_WORKSPACE_URL}
-    container_name: desktop-jenkins_agent-1
-    profiles:
-      - cpp
-    depends_on:
-      sidekick_service:
-        condition: service_completed_successfully # Depends on the successful completion of the sidekick_service
-      jenkins_controller:
-        condition: service_started
-    ports:
-      - "3000:3000"
-    healthcheck:
-      test: ["CMD-SHELL", "[ -f /home/jenkins/.ssh/authorized_keys ] || exit 1"]
-      # Checks if the authorized_keys file exists in the /home/jenkins/.ssh path
-      interval: 5s
-      timeout: 10s
-      retries: 5
-    volumes:
-      - agent-ssh-dir:/home/jenkins/.ssh:ro # Mounts the agent-ssh-dir volume to the /home/jenkins/.ssh path inside the container as read-only
-
+  
 volumes:
   jenkins_home: null
   empty_jenkins_home: null
